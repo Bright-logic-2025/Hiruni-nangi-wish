@@ -70,12 +70,12 @@
         font-size: 1.3rem;
         min-height: 80px;
         margin-top: 8px;
-        white-space: normal; /* fix word wrap issue */
+        white-space: normal;
         word-wrap: break-word;
         text-align: center;
       }
       .letter {
-        display: inline; /* changed from inline-block to inline */
+        display: inline;
         opacity: 0;
         transform: translateY(-10px);
         animation: fadeIn 0.5s forwards;
@@ -86,6 +86,7 @@
           transform: translateY(0);
         }
       }
+
       button {
         background: var(--accent);
         color: white;
@@ -97,7 +98,29 @@
         cursor: pointer;
         margin-top: 24px;
         box-shadow: 0 6px 18px rgba(255, 77, 166, 0.18);
+        position: relative;
+        animation: blink 1s infinite;
       }
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+      button::after {
+        content: "Click Me!";
+        position: absolute;
+        top: -24px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 12px;
+        color: #ff4da6;
+        font-weight: 600;
+      }
+
       #confetti {
         position: absolute;
         left: 0;
@@ -157,9 +180,8 @@
       <canvas id="confetti"></canvas>
       <div class="floating-hearts" id="floatingHearts"></div>
 
-      <h1>Happy Birthday, Hiruni Nangi! 🎂💖</h1>
+      <h1>Happy Birthday, Hiruni! 🎂💖</h1>
 
-      <!-- Message container with Hello Kitty face -->
       <div class="message-container">
         <svg class="hello-kitty-face" viewBox="0 0 120 120">
           <ellipse
@@ -259,7 +281,7 @@
         heart.style.fontSize = size + "px";
         heart.style.left = rand(0, 95) + "%";
         heart.style.bottom = "-40px";
-        const speed = rand(1, 2) / 50;
+        const speed = rand(1, 3) / 50;
         heartsArray.push({
           el: heart,
           x: parseFloat(heart.style.left),
@@ -301,11 +323,11 @@
       // Main button event
       btn.addEventListener("click", () => {
         const text =
-          "Happy Birthday, Hiruni! 🎂💖 You’re like a little sister to me. Wishing you happiness, love, and laughter today and always.";
+          "සුහ උපන්දිනයක් නංගි. ඔයා මට මගේම සහොදරියක් වගේ. හැමදාමත්, සතුටින්, හිනාවෙලා ඉන්න ඕනි. සුභ අනාගතයක් ප්‍රාර්ථනා කරනවා 🩷 ~Malshan Aiya~";
         msgDiv.innerHTML = "";
         text.split("").forEach((c, i) => {
           const span = document.createElement("span");
-          span.innerHTML = c === " " ? "&nbsp;" : c; // preserve spaces
+          span.innerHTML = c === " " ? "&nbsp;" : c;
           span.className = "letter";
           span.style.animationDelay = i * 0.03 + "s";
           msgDiv.appendChild(span);
@@ -316,7 +338,6 @@
         particles = createParticles(120);
         setTimeout(() => (confettiActive = false), 6000);
 
-        // Extra hearts and sparkles during animation
         const heartInterval = setInterval(spawnFloatingHeart, 300);
         const sparkleInterval = setInterval(spawnSparkle, 300);
         setTimeout(() => {
